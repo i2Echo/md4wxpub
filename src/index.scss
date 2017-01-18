@@ -96,9 +96,10 @@ body {
 .btns button:hover, .btn:hover {
     background: #f6f6f6;
 }
-.editormd-dialog-html-entities-dialog,
-.editormd-emoji-dialog{
-  width: 80%!important;
+
+.editormd-dialog{
+  width: 90%!important;
+  max-width: 800px;
 }
 .editormd-html-entities-box,
 .editormd-emoji-dialog-box{
@@ -107,6 +108,15 @@ body {
 .editormd-html-entities-box,
 .editormd-tab-box{
   overflow-x: auto!important;
+}
+.editormd-image-dialog,
+.editormd-goto-line-dialog{
+  max-width: 400px;
+  height: auto!important;
+}
+.editormd-image-dialog .editormd-form input[type=text]{
+  width: 90%!important;
+  max-width: 264px;
 }
 .tip{
     color:#0AA344;
