@@ -96,6 +96,18 @@ body {
 .btns button:hover, .btn:hover {
     background: #f6f6f6;
 }
+.editormd-dialog-html-entities-dialog,
+.editormd-emoji-dialog{
+  width: 80%!important;
+}
+.editormd-html-entities-box,
+.editormd-emoji-dialog-box{
+  width: 99%!important;
+}
+.editormd-html-entities-box,
+.editormd-tab-box{
+  overflow-x: auto!important;
+}
 .tip{
     color:#0AA344;
     margin-top: 5px;
