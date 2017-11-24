@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A markdown editor for Wechat Subscription Accounts",
   "scripts": {
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "gitpush": "git add * && git commit -m \"update\" && git push"
+    
   },
   "author": "kujohnln",
   "license": "MIT",
