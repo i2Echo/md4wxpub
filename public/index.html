@@ -16,6 +16,7 @@
                 <h1>微信公众号编辑器</h1>
                 <p>使用markdown编辑微信公众号文章</p>
                 <p class="tips">温馨提示：</p>
+                <p class="tip">在工具栏找到橡皮擦图样的按钮，点击可进行清空操作；</p>
                 <p class="tip">插入图片地址时，可先上传至微信公众平台找到图片右键复制图片地址即可拿到；</p>
                 <p class="tip">点击复制按钮即可Ctrl+V黏贴到微信公众平台编辑器；</p>
                 <p class="tip">本编辑器会每隔1分钟自动保存，再也不用担心意外而丢失进度；</p>
@@ -23,6 +24,9 @@
             <div class="btns">
                 <button class="green-btn" id="copy-btn" data-clipboard-action="copy"
                         data-clipboard-target=".editormd-preview-container">复制文章</button>
+                <button class="green-btn" id="save">存档</button>
+                <button class="green-btn" id="read">读档</button>
+                <button class="green-btn" id="read-auto-save">读取自动存档</button>
                 <button id="show-toolbar-btn">显示工具栏</button>
                 <button id="close-toolbar-btn">隐藏工具栏</button>
                 <!-- <button id="get-md-btn">获取Markdown</button>
@@ -357,29 +361,40 @@ cond(no)->op
         <script src="lib/editormd/editormd.min.js"></script>
         <script type="text/javascript">
             var testEditor;
-            var _save = function(data){
-            localStorage.setItem("autosave", JSON.stringify(data));
+            var _save = function(key, data){
+                localStorage.setItem(key, JSON.stringify(data));
             }
 
-            var _read = function(){
-            return localStorage.getItem("autosave");
+            var _read = function(key){
+                return localStorage.getItem(key);
             }
 
             var data = {
-            content: null,
-            date: null
+                date: null,
+                content: null
             }
             var _formatTime = function(date){
                 return date.getFullYear() + '-' + ((date.getMonth()+1)>10?(date.getMonth()+1):'0'+(date.getMonth()+1)) + '-' + (date.getDate()>10?date.getDate():'0'+date.getDate()) + ' ' + (date.getHours()>10?date.getHours():'0'+date.getHours()) + ':' + (date.getMinutes()>10?date.getMinutes():'0'+date.getMinutes()) + ':' + (date.getSeconds()>10?date.getSeconds():'0'+date.getSeconds() );
             }
-            if(_read()){
-                $("#input").val(JSON.parse(_read()).content);
+            if(_read("autosave")){
+                $("#input").val(JSON.parse(_read("autosave")).content);
             }
             setInterval(function(){
-                data.content = $("#input").val();
                 data.date = _formatTime(new Date());
-                _save(data);
+                data.content = $("#input").val();
+                _save("autosave", data);
             }, 60*1000);
+
+            var save = function(){
+                data.date = _formatTime(new Date());
+                data.content = $("#input").val();
+                _save("save", data)
+            }
+            var read = function(key){
+                if(_read(key)){
+                    $("#input").val(JSON.parse(_read(key)).content);
+                }
+            }
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width: "90%",
@@ -460,7 +475,17 @@ cond(no)->op
                 // $("#toc-default-btn").click(function() {
                 //     testEditor.config("tocDropdown", false);
                 // });
-                
+                $("#save").bind('click', function() {
+                    save();
+                });
+                $("#read").bind('click', function() {
+                    read("save");
+                });
+                $("#read-auto-save").bind('click', function() {
+                    read("autosave");
+                });
+
+
             });
             $('document').ready(function () {
                 new Clipboard('#copy-btn');
