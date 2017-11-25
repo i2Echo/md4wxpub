@@ -29,7 +29,7 @@
                 <button id="get-html-btn">获取HTML</button> -->
             </div>
             <div id="test-editormd">
-                <textarea style="display:none;"># Example.md
+                <textarea id="input" style="display:none;"># Example.md
 **本编辑器基于editormd**
 ![](https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png)
 示例
@@ -369,13 +369,15 @@ cond(no)->op
             content: null,
             date: null
             }
-            
+            var _formatTime = function(date){
+                return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() ;
+            }
             if(_read()){
-                $("#test-editormd > textarea").value = JSON.parse(_read()).content;
+                $("#input").value = JSON.parse(_read()).content;
             }
             setInterval(function(){
-                data.content = $("#test-editormd > textarea");
-                data.date = Date.now();
+                data.content = $("#input");
+                data.date = _formatTime(Date.now());
                 _save(data);
             }, 60*1000);
             $(function() {
