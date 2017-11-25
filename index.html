@@ -377,7 +377,7 @@ cond(no)->op
             }
             setInterval(function(){
                 data.content = $("#input");
-                data.date = _formatTime(Date.now());
+                data.date = _formatTime(new Date());
                 _save(data);
             }, 60*1000);
             $(function() {
