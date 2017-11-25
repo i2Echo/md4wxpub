@@ -349,15 +349,15 @@ cond(no)->op
 [========]
 
 ### End!
-                </textarea>
+</textarea>
             </div>
         </div>
         <script src="lib/jquery.min.js"></script>
-        <script src="bundle.js"></script>
         <script src="lib/clipboard.min.js"></script>
         <script src="lib/editormd/editormd.min.js"></script>
         <script type="text/javascript">
             var testEditor;
+
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width: "90%",
@@ -438,11 +438,33 @@ cond(no)->op
                 // $("#toc-default-btn").click(function() {
                 //     testEditor.config("tocDropdown", false);
                 // });
+                
             });
             $('document').ready(function () {
                 new Clipboard('#copy-btn');
-
+                
             });
+            var _save = function(data){
+            localStorage.setItem("autosave", JSON.stringify(data));
+            }
+
+            var _read = function(){
+            return localStorage.getItem("autosave");
+            }
+
+            var data = {
+            content: null,
+            date: null
+            }
+            
+            if(_read()){
+                $("#test-editormd > textarea").value = JSON.parse(_read()).content;
+            }
+            setInterval(function(){
+                data.content = $("#test-editormd > textarea");
+                data.date = Date.now();
+                _save(data);
+            }, 60*1000);
         </script>
     </body>
 </html>
