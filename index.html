@@ -386,6 +386,8 @@ cond(no)->op
             }, 60*1000);
 
             var save = function(){
+                data.date = _formatTime(new Date());
+                data.content = $("#input").val();
                 _save("save", data)
             }
             var read = function(key){
