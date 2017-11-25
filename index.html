@@ -16,7 +16,7 @@
                 <h1>微信公众号编辑器</h1>
                 <p>使用markdown编辑微信公众号文章</p>
                 <p class="tips">温馨提示：</p>
-                <p class="tip">在工具栏找到橡皮擦图样的按钮，点击可进行清空操作</p>
+                <p class="tip">在工具栏找到橡皮擦图样的按钮，点击可进行清空操作；</p>
                 <p class="tip">插入图片地址时，可先上传至微信公众平台找到图片右键复制图片地址即可拿到；</p>
                 <p class="tip">点击复制按钮即可Ctrl+V黏贴到微信公众平台编辑器；</p>
                 <p class="tip">本编辑器会每隔1分钟自动保存，再也不用担心意外而丢失进度；</p>
@@ -390,7 +390,8 @@ cond(no)->op
             }
             var read = function(key){
                 if(_read(key)){
-                $("#input").val(JSON.parse(_read(key)).content);
+                    $("#input").val(JSON.parse(_read(key)).content);
+                }
             }
             $(function() {
                 testEditor = editormd("test-editormd", {
