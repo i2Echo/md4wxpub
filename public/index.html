@@ -357,7 +357,27 @@ cond(no)->op
         <script src="lib/editormd/editormd.min.js"></script>
         <script type="text/javascript">
             var testEditor;
+            var _save = function(data){
+            localStorage.setItem("autosave", JSON.stringify(data));
+            }
 
+            var _read = function(){
+            return localStorage.getItem("autosave");
+            }
+
+            var data = {
+            content: null,
+            date: null
+            }
+            
+            if(_read()){
+                $("#test-editormd > textarea").value = JSON.parse(_read()).content;
+            }
+            setInterval(function(){
+                data.content = $("#test-editormd > textarea");
+                data.date = Date.now();
+                _save(data);
+            }, 60*1000);
             $(function() {
                 testEditor = editormd("test-editormd", {
                     width: "90%",
@@ -444,27 +464,7 @@ cond(no)->op
                 new Clipboard('#copy-btn');
                 
             });
-            var _save = function(data){
-            localStorage.setItem("autosave", JSON.stringify(data));
-            }
-
-            var _read = function(){
-            return localStorage.getItem("autosave");
-            }
-
-            var data = {
-            content: null,
-            date: null
-            }
             
-            if(_read()){
-                $("#test-editormd > textarea").value = JSON.parse(_read()).content;
-            }
-            setInterval(function(){
-                data.content = $("#test-editormd > textarea");
-                data.date = Date.now();
-                _save(data);
-            }, 60*1000);
         </script>
     </body>
 </html>
